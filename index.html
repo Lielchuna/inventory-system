@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>מערכת לניהול מלאי - דף הבית</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .content {
+            padding: 50px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .logout-btn {
+            background-color: #f44336 !important; /* כפתור אדום להתנתקות */
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    מערכת לניהול מלאי - ברוך הבא, {{ session.user_id }}
+</div>
+
+<div class="content">
+    <h1>דף הבית</h1>
+    <p>בחר פעולה:</p>
+
+    <a href="/calculator" class="btn">מחשבון הזמנה</a>
+    <a href="/history" class="btn">היסטוריית הזמנות</a>
+    <a href="/logout" class="btn logout-btn">התנתקות</a>
+</div>
+
+<footer>
+    <p>© כל הזכויות שמורות</p>
+</footer>
+
+</body>
+</html>

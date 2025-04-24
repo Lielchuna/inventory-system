@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>תוצאות חישוב - מספר מוצרים</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .container {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 30px;
+        }
+        .product-box {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: right;
+            box-shadow: 0 0 6px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #efefef;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    מערכת לניהול מלאי
+</div>
+
+<div class="container">
+    <h1>תוצאות החישוב לכל המוצרים</h1>
+
+    <p><strong>תאריך ושעה:</strong> {{ item.datetime }}</p>
+    <p><strong>מספר מוצרים:</strong> {{ item.num_products }}</p>
+    <p><strong>מספר חודשים:</strong> {{ item.num_months }}</p>
+    <hr>
+
+    {% for p in item.products %}
+    <div class="product-box">
+        <h2>מוצר: {{ p.product_name }}</h2>
+
+        {% if p.found_solution %}
+            <p><strong>עלות מינימלית:</strong> {{ p.min_cost }}</p>
+
+            <h4>תכנית ייצור ואחסון</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>חודש</th>
+                        <th>ייצור</th>
+                        <th>מלאי בסוף החודש</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for month in range(item.num_months) %}
+                    <tr>
+                        <td>{{ month+1 }}</td>
+                        <td>{{ p.orders[month] }}</td>
+                        <td>{{ p.inventories[month] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="color:red;">לא נמצא פתרון ישים עבור מוצר זה</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <div>
+        <a href="/" class="btn">חזרה לדף הראשי</a>
+        <a href="/calculator" class="btn">חישוב חדש</a>
+        <a href="/history" class="btn">צפה בהיסטוריה</a>
+    </div>
+</div>
+
+</body>
+</html>

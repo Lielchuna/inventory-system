@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8" />
+    <title>היסטוריית הזמנות - מערכת לניהול מלאי</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .container {
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #fff;
+        }
+        th, td {
+            text-align: right;
+            border: 1px solid #ddd;
+            padding: 10px;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .product-info {
+            margin-bottom: 10px;
+        }
+        a.btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        a.btn:hover {
+            background-color: #45a049;
+        }
+        .home-link {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    מערכת לניהול מלאי
+</div>
+
+<div class="container">
+    <h1>היסטוריית הזמנות</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>תאריך ושעה</th>
+                <th>מס' מוצרים</th>
+                <th>מס' חודשים</th>
+                <th>פרטי מוצרים</th>
+                <th>מעבר לתוצאה</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in history_data %}
+            <tr>
+                <td>{{ item.datetime }}</td>
+                <td>{{ item.num_products }}</td>
+                <td>{{ item.num_months }}</td>
+                <td>
+                    {% for p in item.products %}
+                        <div class="product-info">
+                            <strong>מוצר:</strong> {{ p.product_name }}<br>
+                            {% if p.found_solution %}
+                                <strong>עלות מינימלית:</strong> {{ p.min_cost }}<br>
+                                <strong>ייצור:</strong> {{ p.orders }}<br>
+                                <strong>מלאי:</strong> {{ p.inventories }}
+                            {% else %}
+                                <span style="color:red;">לא נמצא פתרון</span>
+                            {% endif %}
+                            <hr>
+                        </div>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ url_for('result', idx=loop.index0) }}" class="btn">צפה</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="home-link">
+        <a href="/" class="btn">חזרה לדף הראשי</a>
+    </div>
+</div>
+
+</body>
+</html>
